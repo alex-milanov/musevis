@@ -10,6 +10,13 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 		<title>XAmp Prototype</title>
 		<link rel="stylesheet" href="css/style.css">
+		<style>
+			line {stroke:#ddd;shape-rendering: crispEdges;}
+			text {text-anchor:middle;}
+			.axis line {fill:none;stroke:#ddd;shape-rendering: crispEdges;}
+			.axis path  {fill:none;}
+			.axis text {font-size:0.7em;fill:#555;font-family:sans-serif}
+		</style>
 	</head>
 	<body>
     <div class="app">
@@ -23,6 +30,7 @@
 			<svg width=640 height=240></svg>
     </div>
     <script src="cordova.js"></script>
+		<script src="http://d3js.org/d3.v3.js"></script>
 		<script src="js/app.js"></script>
 	</body>
 </html>
