@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
+@import url(//fonts.googleapis.com/css?family=Electrolize);
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -2336,6 +2337,8 @@ html {
   box-sizing: inherit; }
 
 body {
+  margin: 0px;
+  padding: 0px;
   font-family: "Open Sans";
   background: #000;
   color: #fff; }
@@ -2350,3 +2353,35 @@ body {
 
 .axis--x path {
   display: none; }
+
+.app h1 {
+  font-family: Electrolize; }
+
+.app svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+.app .playpause {
+  position: absolute;
+  background: none;
+  border: 0px;
+  outline: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 44px;
+  height: 64px;
+  line-height: 64px;
+  width: 64px;
+  text-align: center;
+  color: white;
+  z-index: 99; }
+
+.app audio {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  z-index: 99;
+  opacity: 0.7; }
