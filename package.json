@@ -19,6 +19,7 @@
   "dependencies": {
     "bourbon": "^4.2.7",
     "bourbon-neat": "^1.8.0",
+    "d3": "^4.7.3",
     "font-awesome": "^4.7.0",
     "iblokz": "github:iblokz/iblokz",
     "rx": "^4.1.0",
