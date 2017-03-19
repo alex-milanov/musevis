@@ -1,18 +1,16 @@
 'use strict';
 
+const {obj} = require('iblokz-data');
+
 // initial
 const initial = {
-	number: 0
+	playing: false
 };
 
 // actions
-const set = number => state => Object.assign({}, state, {number});
-const incr = () => state => Object.assign({}, state, {number: state.number + 1});
-const decr = () => state => Object.assign({}, state, {number: state.number - 1});
+const toggle = path => state => obj.patch(state, path, !obj.sub(state, path));
 
 module.exports = {
 	initial,
-	set,
-	incr,
-	decr
+	toggle
 };

@@ -7,9 +7,8 @@ const $ = Rx.Observable;
 let d3 = window.d3;
 
 // iblokz
-const vdom = require('iblokz/adapters/vdom');
-const obj = require('iblokz/common/obj');
-const arr = require('iblokz/common/arr');
+const vdom = require('iblokz-snabbdom-helpers');
+const {obj, arr} = require('iblokz-data');
 
 // app
 const app = require('./util/app');
@@ -42,11 +41,7 @@ const state$ = actions$
 	.map(state => (console.log(state), state))
 	.share();
 
-const renderChart = (el, analyser) => {
-	requestAnimationFrame(() => renderChart(el, analyser));
-	let frequencyData = new Uint8Array(200);
-	// copy frequency data to frequencyData array.
-	analyser.getByteFrequencyData(frequencyData);
+const renderCircles = ({el, frequencyData}) => {
 	// console.log(frequencyData);
 
 	// scale things to fit
@@ -57,8 +52,6 @@ const renderChart = (el, analyser) => {
 	let hueScale = d3.scale.linear()
 			.domain([0, d3.max(frequencyData)])
 			.range([0, 360]);
-
-	console.log(frequencyData);
 
 	// update d3 chart with new data
 	let circles = el.selectAll('circle')
@@ -95,25 +88,73 @@ const initd3 = () => {
 	const g = svg.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	*/
-	var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-	var audioElement = document.getElementById('song');
-	var audioSrc = audioCtx.createMediaElementSource(audioElement);
-	var analyser = audioCtx.createAnalyser();
+	const audioCtx = new ((window.AudioContext || window.webkitAudioContext
+		|| window.mozAudioContext || window.oAudioContext || window.msAudioContext))();
+	const audioElement = document.getElementById('song');
+	const audioSrc = audioCtx.createMediaElementSource(audioElement);
+	const analyser = audioCtx.createAnalyser();
+	const scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
+
+	scriptNode.onaudioprocess = function(ev) {
+		// The input buffer is the song we loaded earlier
+		var inputBuffer = ev.inputBuffer;
+
+		// The output buffer contains the samples that will be modified and played
+		var outputBuffer = ev.outputBuffer;
+
+		// Loop through the output channels (in this case there is only one)
+		for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+			var inputData = inputBuffer.getChannelData(channel);
+			var outputData = outputBuffer.getChannelData(channel);
+
+			console.log(inputData);
+
+			// Loop through the 4096 samples
+			for (var sample = 0; sample < inputBuffer.length; sample++) {
+				// make output equal to the same as the input
+				outputData[sample] = inputData[sample];
+			}
+		}
+	};
 
 	// bind our analyser to the media element source.
 	audioSrc.connect(analyser);
 	audioSrc.connect(audioCtx.destination);
+	// scriptNode.connect(analyser);
+	// scriptNode.connect(audioCtx.destination);
 
-	// var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+	analyser.fftSize = 256;
 
-	renderChart(svg, analyser);
+	console.log(scriptNode);
+
+	function animate() {
+		requestAnimationFrame(animate);
+		let frequencyData = new Uint8Array(analyser.frequencyBinCount);
+		// copy frequency data to frequencyData array.
+		analyser.getByteFrequencyData(frequencyData);
+		console.log(frequencyData);
+		renderCircles({el: svg, frequencyData});
+	}
+
+	animate();
 };
 
 state$
 	.take(1)
-	.delay(100)
+	.delay(1000)
 	.subscribe(() => initd3());
 
 // state -> ui
 const ui$ = state$.map(state => ui({state, actions}));
 vdom.patchStream(ui$, '.app');
+
+state$
+	.distinctUntilChanged(state => state.playing)
+	.subscribe(state => {
+		const songEl = document.getElementById('song');
+		console.log(songEl);
+		if (state.playing)
+			songEl.play();
+		else
+			songEl.pause();
+	});

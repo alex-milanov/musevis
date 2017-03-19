@@ -6,8 +6,9 @@
   "scripts": {
     "prebuild": "node bin/move-assets.js",
     "build": "npm run build:js && npm run build:sass",
-    "build:js": "browserify src/js/index.js -o dist/www/js/app.js",
+    "build:js": "browserify src/js/index.js -o dist/www/js/app.js --debug",
     "build:sass": "node-sass --include-path=$(node bin/sass-paths.js) src/sass/style.sass dist/www/css/style.css",
+    "build:legacy": "browserify -t [ babelify --global --presets [ es2015 ] --plugins transform-object-assign ] src/js/index.js -o dist/www/js/app.js --debug",
     "watch": "npm run watch:js & npm run watch:sass & npm run livereload",
     "watch:js": "watchify -p browserify-hmr src/js/index.js -o dist/www/js/app.js --debug",
     "watch:sass": "npm run build:sass -- --watch src/sass/**/*",
@@ -21,7 +22,8 @@
     "bourbon-neat": "^1.8.0",
     "d3": "^4.7.3",
     "font-awesome": "^4.7.0",
-    "iblokz": "github:iblokz/iblokz",
+    "iblokz-data": "^1.0.2",
+    "iblokz-snabbdom-helpers": "^1.0.0",
     "rx": "^4.1.0",
     "snabbdom": "^0.5.4",
     "superagent": "^3.3.1"

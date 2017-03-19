@@ -4,13 +4,19 @@
 const Rx = require('rx');
 const $ = Rx.Observable;
 
-const arr = require('iblokz/common/arr');
-const obj = require('iblokz/common/obj');
+const {arr, obj} = require('iblokz-data');
+
+const observe = source => (source instanceof Rx.Observable)
+  ? source
+  : (source.then instanceof Function)
+    ? Rx.Observable.fromPromise(source)
+    : Rx.Observable.just(source);
 
 const adapt = o => Object.keys(o).filter(key => key !== 'initial').reduce((o2, key) => Object.assign({}, o2,
 	(o[key] instanceof Function) && obj.keyValue(key, function() {
-		const resp = o[key].apply(null, arr.fromList(arguments));
-		o2.stream.onNext(resp);
+		observe(
+			o[key].apply(null, Array.from(arguments))
+		).subscribe(resp => o2.stream.onNext(resp));
 	}) || (o[key] instanceof Object) && (() => {
 		let o3 = adapt(o[key]);
 		return Object.assign({
