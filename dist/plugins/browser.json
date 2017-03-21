@@ -9,12 +9,6 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.test.cordovaBoilerplate"
-        },
-        "cordova-plugin-nativeaudio": {
-            "PACKAGE_NAME": "com.test.cordovaBoilerplate"
-        },
-        "cordova-plugin-crosswalk-webview": {
-            "PACKAGE_NAME": "com.test.cordovaBoilerplate"
         }
     },
     "dependent_plugins": {}

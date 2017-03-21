@@ -2366,6 +2366,14 @@ body {
   z-index: 98;
   opacity: 0.8; }
 
+.app .controls {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  width: 128px;
+  z-index: 98;
+  opacity: 0.8; }
+
 .app svg {
   position: absolute;
   top: 50%;
