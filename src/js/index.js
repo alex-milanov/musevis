@@ -45,6 +45,7 @@ const state$ = actions$
 
 const render = {
 	circles: ({el, data}) => {
+		el.selectAll(':not(circle)').remove();
 		// scale things to fit
 		let radiusScale = d3.scale.linear().domain([0, d3.max(data.freq)]).range([0, el.attr('height') / 2 - 10]);
 
@@ -69,6 +70,7 @@ const render = {
 		circles.exit().remove();
 	},
 	bars: ({el, data}) => {
+		el.selectAll(':not(rect)').remove();
 		let hueScale = d3.scale.linear().domain([0, d3.max(data.freq)]).range([0, 360]);
 
 		let rects = el.selectAll('rect').data(data.freq);
