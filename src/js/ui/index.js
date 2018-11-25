@@ -9,7 +9,7 @@ module.exports = ({state, actions}) => section('.app', [
 	controls({state, actions}),
 	img('.logo[src="assets/img/logo.png"][width="48"]'),
 	h('audio#song', {attrs: {src: 'assets/LatinEthnoElektroGroove.mp3', controls: true}}),
-	h('svg', {attrs: {width: 780, height: 520}}),
+	h('svg#scene', {attrs: {width: 780, height: 520}}),
 	button('.playpause', {
 		on: {click: () => actions.toggle('playing')}
 	}, [

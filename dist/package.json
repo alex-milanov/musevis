@@ -1,0 +1,13 @@
+{
+  "name": "com.test.cordovaboilerplate",
+  "version": "1.0.0",
+  "displayName": "CordovaBoilerplate",
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  },
+  "dependencies": {
+    "cordova-android": "~7.0.0"
+  }
+}

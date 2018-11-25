@@ -5,7 +5,8 @@ const {div, section, select, option, button, svg, img, span, h1, h, i} = require
 
 const visList = [
 	'circles',
-	'bars'
+	'bars',
+	'lights'
 ];
 
 module.exports = ({state, actions}) => section('.controls', [

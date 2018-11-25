@@ -20,13 +20,12 @@
   "dependencies": {
     "bourbon": "^4.2.7",
     "bourbon-neat": "^1.8.0",
-    "d3": "^4.7.3",
+    "d3": "^4.9.1",
     "font-awesome": "^4.7.0",
     "iblokz-data": "^1.0.2",
     "iblokz-snabbdom-helpers": "^1.0.0",
-    "raf-stream": "^3.0.0",
+    "raf": "^3.4.0",
     "rx": "^4.1.0",
-    "rx-node": "^1.0.2",
     "snabbdom": "^0.5.4",
     "superagent": "^3.3.1"
   },
